@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "Email": {
+      "title": "Email",
+      "description": "Represents a synchronized Gmail message with AI-augmented analysis and replies.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique Gmail message ID." },
+        "threadId": { "type": "string", "description": "The thread identifier." },
+        "subject": { "type": "string", "description": "The subject of the email." },
+        "snippet": { "type": "string", "description": "Brief text preview of the message content." },
+        "from": { "type": "string", "description": "Sender email name and address." },
+        "to": { "type": "string", "description": "Receiver email address." },
+        "date": { "type": "string", "description": "The message arrival timestamp string." },
+        "body": { "type": "string", "description": "Full plain or decoded HTML body." },
+        "labelIds": { "type": "array", "description": "Gmail categories and user-defined labels." },
+        "category": { "type": "string", "description": "AI classified email folder category." },
+        "priority": { "type": "string", "description": "AI analyzed priority status." },
+        "sentiment": { "type": "string", "description": "Emotional state of message body." },
+        "summary": { "type": "string", "description": "AI generated concise abstract." },
+        "intent": { "type": "string", "description": "Sender core request objective." },
+        "detectedMeeting": { "type": "boolean", "description": "Flag for scheduling requests." },
+        "detectedPhishing": { "type": "boolean", "description": "Flag for phishing threats." },
+        "followUpSuggestion": { "type": "string", "description": "Recommended next action details." },
+        "aiSuggestedReply": { "type": "string", "description": "Gemini-formulated response draft." },
+        "replySent": { "type": "boolean", "description": "Flag if reply was dispatched." },
+        "replyAction": { "type": "string", "description": "The final reply mechanism action." },
+        "replyTimestamp": { "type": "string", "description": "Time the automated reply completed." }
+      },
+      "required": ["id", "threadId", "subject", "from", "to", "date", "body", "labelIds"]
+    },
+    "AutomationRule": {
+      "title": "AutomationRule",
+      "description": "Custom user-defined rules to handle specific categories of emails autonomously.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique rule identifier." },
+        "name": { "type": "string", "description": "Friendly name of the automation." },
+        "trigger": { "type": "string", "description": "The classification trigger event type." },
+        "conditionValue": { "type": "string", "description": "The value which fires the trigger condition." },
+        "action": { "type": "string", "description": "The auto response draft or label action." },
+        "actionValue": { "type": "string", "description": "The specific template value." },
+        "enabled": { "type": "boolean", "description": "Current active toggle state." }
+      },
+      "required": ["id", "name", "trigger", "action", "enabled"]
+    },
+    "AIPerference": {
+      "title": "AIPerference",
+      "description": "Global tone, language and response preferences.",
+      "type": "object",
+      "properties": {
+        "tone": { "type": "string", "description": "Communication persona tone used for drafting." },
+        "language": { "type": "string", "description": "Selected interface and response translation target." },
+        "customContext": { "type": "string", "description": "Business guidelines injected into Gemini's prompt context." },
+        "signature": { "type": "string", "description": "Custom bottom signature to sign off emails." },
+        "enableAutoReply": { "type": "boolean", "description": "Enable full hands-free instant sending." },
+        "theme": { "type": "string", "description": "The visual interface theme preference: light or dark." }
+      },
+      "required": ["tone", "language", "customContext", "signature", "enableAutoReply"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Live security audits and action registers.",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "description": "Record event date." },
+        "action": { "type": "string", "description": "Event action name description." },
+        "status": { "type": "string", "description": "Result execution status." }
+      },
+      "required": ["timestamp", "action", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/emails/{emailId}": {
+      "schema": { "$ref": "#/entities/Email" },
+      "description": "Synchronized user email folders and category logs."
+    },
+    "/users/{userId}/rules/{ruleId}": {
+      "schema": { "$ref": "#/entities/AutomationRule" },
+      "description": "Workspace custom automation rules configurations."
+    },
+    "/users/{userId}/preferences/default": {
+      "schema": { "$ref": "#/entities/AIPerference" },
+      "description": "User global Gemini response custom workspace parameters."
+    },
+    "/users/{userId}/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "User active workspace security and log registers."
+    }
+  }
+}

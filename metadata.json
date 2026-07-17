@@ -1,0 +1,6 @@
+{
+  "name": "AI Email Reply Agent",
+  "description": "An intelligent assistant that automatically reads incoming emails, classifies intent, and generates context-aware, professional replies.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
